@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSO Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 500px;
+    }
+    h1 { color: #333; margin-bottom: 20px; }
+    p { color: #666; margin-bottom: 30px; }
+    .btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #5a6fd6; }
+    .token-info {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      text-align: left;
+    }
+    .protocol-info {
+      margin-top: 15px;
+      padding: 8px;
+      background: #e8f4e8;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #2d5a2d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 SSO Login</h1>
+    <p>Haz clic para autenticarte y abrir la aplicación Electron</p>
+    <button class="btn" onclick="openAppWithToken()">Iniciar Sesión con SSO</button>
+    <div class="protocol-info" id="protocolInfo"></div>
+    <div class="token-info" id="tokenInfo" style="display: none;"></div>
+  </div>
+
+  <script>
+    function openAppWithToken() {
+      // Token SSO dummy (formato JWT simulado)
+      const dummyToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsZXhpcyBGb3JiZXMiLCJlbWFpbCI6ImEuZm9yYmVzLmdpbEBnbWFpbC5jb20iLCJpYXQiOjE3MzM5MTUyMDB9.dummy_signature_here';
+      
+      // Construir la URL del deep link con el token
+      const deepLinkUrl = `hppo://auth?token=${encodeURIComponent(dummyToken)}`;
+      
+      // Mostrar info
+      document.getElementById('protocolInfo').textContent = `Protocolo: ${deepLinkUrl.split('?')[0]}`;
+      document.getElementById('tokenInfo').style.display = 'block';
+      document.getElementById('tokenInfo').innerHTML = `<strong>Token enviado:</strong><br>${dummyToken}`;
+      
+      // Abrir la app con el deep link
+      window.location.href = deepLinkUrl;
+    }
+  </script>
+</body>
+</html>
